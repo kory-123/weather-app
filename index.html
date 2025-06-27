@@ -8,10 +8,10 @@
 <body>
 <center>
     <div class="input">
-        <input type="text" id="cityInput" placeholder="Enter your city/country"> <br>
+        <h1>Real-time weather forecast</h1>
+        <input type="text" id="cityInput" placeholder="Check your local weather"> <br>
         <button onclick="getWeather()">Search</button>
         
-        <!-- Weather Display Section -->
         <div id="weatherResult" class="weather-display">
             <div id="loading" class="loading">🔍 Searching...</div>
             <div id="weatherData" class="weather-data">
@@ -42,11 +42,9 @@
 </center>
 
 <script>
-// Your OpenWeatherMap API key (you'll need to get this from openweathermap.org)
-const API_KEY = 'f29c13cafad6ba968b801c84d0455469'; // Replace with your actual API key
+const API_KEY = 'f29c13cafad6ba968b801c84d0455469'; 
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
-// Function to get weather data
 async function getWeather() {
     const cityInput = document.getElementById('cityInput');
     const city = cityInput.value.trim();
@@ -56,7 +54,7 @@ async function getWeather() {
         return;
     }
     
-    // Show loading state
+
     showLoading();
     
     try {
@@ -73,12 +71,11 @@ async function getWeather() {
     }
 }
 
-// Function to display weather data
 function displayWeather(data) {
     const weatherResult = document.getElementById('weatherResult');
     const weatherData = document.getElementById('weatherData');
     
-    // Update weather information
+    
     document.getElementById('cityName').textContent = `${data.name}, ${data.sys.country}`;
     document.getElementById('temp').textContent = `${Math.round(data.main.temp)}°C`;
     document.getElementById('weatherIcon').textContent = getWeatherEmoji(data.weather[0].main);
@@ -87,14 +84,12 @@ function displayWeather(data) {
     document.getElementById('humidity').textContent = `${data.main.humidity}%`;
     document.getElementById('windSpeed').textContent = `${data.wind.speed} m/s`;
     
-    // Show weather data and hide loading/error
     hideLoading();
     hideError();
     weatherData.style.display = 'block';
     weatherResult.style.display = 'block';
 }
 
-// Function to show loading state
 function showLoading() {
     document.getElementById('loading').style.display = 'block';
     document.getElementById('weatherData').style.display = 'none';
@@ -102,12 +97,12 @@ function showLoading() {
     document.getElementById('weatherResult').style.display = 'block';
 }
 
-// Function to hide loading state
+
 function hideLoading() {
     document.getElementById('loading').style.display = 'none';
 }
 
-// Function to show error message
+
 function showError(message) {
     const errorDiv = document.getElementById('error');
     errorDiv.textContent = message;
@@ -117,12 +112,11 @@ function showError(message) {
     document.getElementById('weatherResult').style.display = 'block';
 }
 
-// Function to hide error message
 function hideError() {
     document.getElementById('error').style.display = 'none';
 }
 
-// Function to get weather emoji based on weather condition
+
 function getWeatherEmoji(weatherMain) {
     const weatherEmojis = {
         'Clear': '☀️',
@@ -138,20 +132,28 @@ function getWeatherEmoji(weatherMain) {
     return weatherEmojis[weatherMain] || '🌤️';
 }
 
-// Allow Enter key to trigger search
 document.getElementById('cityInput').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         getWeather();
     }
 });
 
-// Hide weather result initially
+
 document.getElementById('weatherResult').style.display = 'none';
 </script>
 </body>
 <style>
     * {
-        background-color: blue;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        background-color: #f1f1f1;
+    }
+
+    h1 {
+        position: relative;
+        top: 100px;
+        margin-top: 50px;
+        color: white;
+        background-color: transparent;
     }
 
     .input {
@@ -160,9 +162,10 @@ document.getElementById('weatherResult').style.display = 'none';
         min-height: 600px;
         width: 600px;
         border-radius: 20px;
-        background-color: lightskyblue;
+        background-color: #1a2a57;
         box-shadow: 0px 1px 10px green;
         padding-bottom: 30px;
+        filter: blur();
     }
 
     input {
@@ -170,8 +173,8 @@ document.getElementById('weatherResult').style.display = 'none';
         border-radius: 30px;
         height: 50px;
         width: 500px;
-        background-color: whitesmoke;
-        color: darkgray;
+        background-color: white;
+        color: black;
         font-size: 20px;
         border: none;
         padding: 0 20px;
@@ -183,34 +186,32 @@ document.getElementById('weatherResult').style.display = 'none';
     }
 
     button {
-        background-color: teal;
         color: black;
         margin-top: 30px;
         border-radius: 30px;
         height: 50px;
-        width: 150px;
+        width: 170px;
         border: none;
-        font-size: 16px;
+        font-size: 20px;
         font-weight: bold;
     }
 
     button:hover {
-        height: 50px;
-        width: 170px;
         background-color: blue;
         color: white;
-        transition: ease-in-out 500ms;
+        transition: ease-in-out 0.5s;
         cursor: pointer;
+        animation: button-height 1s ease-in-out both;
+    }
+    @keyframes button-height {
+        0% {height: 50px;}
+        100%{height: 60px;}        
     }
 
-    /* Weather Display Styles */
+    
     .weather-display {
         margin-top: 40px;
-        width: 90%;
-        background-color: transparent;
         border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
     }
 
     .loading {
@@ -221,6 +222,7 @@ document.getElementById('weatherResult').style.display = 'none';
 
     .weather-data {
         color: white;
+        background: #1a2a57;
         text-align: center;
     }
 
@@ -287,15 +289,14 @@ document.getElementById('weatherResult').style.display = 'none';
     }
 
     .error {
-        color: #ff6b6b;
-        font-size: 16px;
+        font-size: 30px;
         padding: 20px;
-        background-color: rgba(255, 107, 107, 0.1);
+        background-color: #1a2a57;
         border-radius: 10px;
         margin-top: 20px;
     }
 
-    /* Responsive design */
+    
     @media (max-width: 650px) {
         .input {
             width: 90%;
